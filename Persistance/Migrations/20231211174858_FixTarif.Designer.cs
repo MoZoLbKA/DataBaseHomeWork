@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Persistance;
@@ -11,9 +12,11 @@ using Persistance;
 namespace Persistance.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231211174858_FixTarif")]
+    partial class FixTarif
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,16 +96,13 @@ namespace Persistance.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DetailId")
+                    b.Property<int>("CodeProfession")
                         .HasColumnType("integer");
 
                     b.Property<int>("DischargeBuilder")
                         .HasColumnType("integer");
 
                     b.Property<int>("OperationId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ProfessionId")
                         .HasColumnType("integer");
 
                     b.Property<int>("TarifId")
@@ -116,11 +116,7 @@ namespace Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DetailId");
-
                     b.HasIndex("OperationId");
-
-                    b.HasIndex("ProfessionId");
 
                     b.HasIndex("TarifId");
 
@@ -148,21 +144,9 @@ namespace Persistance.Migrations
 
             modelBuilder.Entity("Models.Models.Standart", b =>
                 {
-                    b.HasOne("Models.Models.Detail", "Detail")
-                        .WithMany()
-                        .HasForeignKey("DetailId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Models.Models.Operation", "Operation")
                         .WithMany()
                         .HasForeignKey("OperationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Models.Models.Profession", "Profession")
-                        .WithMany()
-                        .HasForeignKey("ProfessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -172,11 +156,7 @@ namespace Persistance.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Detail");
-
                     b.Navigation("Operation");
-
-                    b.Navigation("Profession");
 
                     b.Navigation("Tarif");
                 });

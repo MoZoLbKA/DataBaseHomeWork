@@ -18,9 +18,5 @@ public class MainDbContext : DbContext
     {
         modelBuilder.Entity<Standart>()
             .ToTable(t => t.HasCheckConstraint("DischargeBuilder", "\"DischargeBuilder\" > 0 AND \"DischargeBuilder\" < 9"));
-        modelBuilder.Entity<Standart>()
-            .HasOne(a => a.Tarif)
-            .WithOne(a => a.Standart)
-            .HasForeignKey<Standart>(c => c.TarifId);
     }
 }

@@ -10,7 +10,12 @@ namespace Models.Models
         [ForeignKey("OperationId")]
         public int OperationId { get; set; }
         public Operation Operation { get; set; }
-        public int CodeProfession {  get; set; }
+        [ForeignKey("ProfessionId")]
+        public int ProfessionId {  get; set; }
+        public Profession Profession { get; set; }
+        [ForeignKey("DetailId")]
+        public int DetailId { get; set; }
+        public Detail Detail { get; set; }
         public int DischargeBuilder { get; set; }
         [ForeignKey("TarifId")]
         public int TarifId { get; set; }
